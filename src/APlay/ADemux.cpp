@@ -10,7 +10,7 @@ using namespace std;
 
 #pragma comment(lib,"avformat.lib")
 #pragma comment(lib,"avutil.lib")
-
+#pragma comment(lib,"avcodec.lib")
 ADemux::ADemux()
 {
 	static bool isFirst = true;
@@ -106,5 +106,40 @@ bool ADemux::Open(const char* url)
 
 
 	return true;
+}
+
+AVPacket* ADemux::Read()
+{
+	mux.lock();
+
+	if (!ic)//容错
+	{
+		mux.unlock();
+
+		return nullptr;
+
+	}
+
+	AVPacket* pkt = av_packet_alloc();
+	//读取一帧 并分配空间
+	int res = av_read_frame(ic, pkt);
+	if (res != 0)
+	{
+		mux.unlock();
+		av_packet_free(&pkt);
+		return nullptr;
+	}
+
+	//pts 转换为毫秒
+	pkt->pts = pkt->pts * (1000 * (r2d(ic->streams[pkt->stream_index]->time_base)));
+	pkt->dts = pkt->dts * (1000 * (r2d(ic->streams[pkt->stream_index]->time_base)));
+
+	cout << pkt->pts << "  " << flush;
+
+
+	mux.unlock();
+
+
+	return pkt;
 }
  
