@@ -23,6 +23,13 @@ public:
 	//获取音频参数  返回的空间需要清理 avcodec_parameters_free
 	AVCodecParameters* CopyAPara();
 
+	//seek 位置 pos 0.0 ~1.0
+	virtual bool Seek(double pos);
+
+	//清空读取缓存
+	virtual void Clear();
+	virtual void Close();
+
 protected:
 	std::mutex mux;
 	//解封装上下文
@@ -30,6 +37,7 @@ protected:
 	//音视频索引，读取时区分音视频
 	int videoStream = 0;
 	int audioStream = 1;
+	int totalMs = 0;
 };
 
 

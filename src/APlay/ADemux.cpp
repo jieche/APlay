@@ -143,6 +143,53 @@ AVPacket* ADemux::Read()
 	return pkt;
 }
 
+//清空读取缓存
+void ADemux::Clear()
+{
+	mux.lock();
+	if (!ic)
+	{
+		mux.unlock();
+		return;
+	}
+	//清理读取缓冲
+	avformat_flush(ic);
+	mux.unlock();
+}
+void ADemux::Close()
+{
+	mux.lock();
+	if (!ic)
+	{
+		mux.unlock();
+		return;
+	}
+	avformat_close_input(&ic);
+	//媒体总时长（毫秒）
+	totalMs = 0;
+	mux.unlock();
+}
+
+//seek 位置 pos 0.0 ~1.0
+bool ADemux::Seek(double pos)
+{
+	mux.lock();
+	if (!ic)
+	{
+		mux.unlock();
+		return false;
+	}
+	//清理读取缓冲
+	avformat_flush(ic);
+
+	long long seekPos = 0;
+	seekPos = ic->streams[videoStream]->duration * pos;
+	int re = av_seek_frame(ic, videoStream, seekPos, AVSEEK_FLAG_BACKWARD | AVSEEK_FLAG_FRAME);
+	mux.unlock();
+	if (re < 0) return false;
+	return true;
+}
+
 AVCodecParameters* ADemux::CopyVPara()
 { 
 	mux.lock();

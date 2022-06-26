@@ -14,10 +14,12 @@ int main(int argc, char *argv[])
     //const char* url =R"(rtmp://live.hkstv.hk.lxdns.com/live/hks)";
     const char*  url = "960_544.mp4";
     cout << "demux.Open = " << demux.Open(url);
-
+    //demux.Clear();
+    //demux.Close();
     cout << "CopyVPara = " << demux.CopyVPara() << endl;
     cout << "CopyAPara = " << demux.CopyAPara() << endl;
-
+    cout << "seek=" << demux.Seek(0.995) << endl;
+     
     while (true)
     {
         AVPacket* pkt = demux.Read();
