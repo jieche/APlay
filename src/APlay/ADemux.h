@@ -4,6 +4,7 @@
 
 struct AVFormatContext;
 struct AVPacket;
+struct AVCodecParameters;
 class ADemux
 {
 public:
@@ -15,6 +16,12 @@ public:
 
 	//空间调用者释放 释放AVPacket对象空间 数据空间av_packet_free
 	virtual AVPacket* Read();
+
+	//获取视频参数  返回的空间需要清理  avcodec_parameters_free
+	AVCodecParameters* CopyVPara();
+
+	//获取音频参数  返回的空间需要清理 avcodec_parameters_free
+	AVCodecParameters* CopyAPara();
 
 protected:
 	std::mutex mux;

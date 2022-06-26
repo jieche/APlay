@@ -142,4 +142,32 @@ AVPacket* ADemux::Read()
 
 	return pkt;
 }
- 
+
+AVCodecParameters* ADemux::CopyVPara()
+{ 
+	mux.lock();
+	if (!ic)
+	{
+		mux.unlock();
+		return NULL;
+	}
+	AVCodecParameters* pa = avcodec_parameters_alloc();
+	avcodec_parameters_copy(pa, ic->streams[videoStream]->codecpar);
+	mux.unlock();
+	return pa;
+}
+
+AVCodecParameters* ADemux::CopyAPara()
+{
+	mux.lock();
+	if (!ic)
+	{
+		mux.unlock();
+		return NULL;
+	}
+	AVCodecParameters* pa = avcodec_parameters_alloc();
+	avcodec_parameters_copy(pa, ic->streams[audioStream]->codecpar);
+	mux.unlock();
+	return pa;
+}
+  

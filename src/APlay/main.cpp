@@ -15,6 +15,9 @@ int main(int argc, char *argv[])
     const char*  url = "960_544.mp4";
     cout << "demux.Open = " << demux.Open(url);
 
+    cout << "CopyVPara = " << demux.CopyVPara() << endl;
+    cout << "CopyAPara = " << demux.CopyAPara() << endl;
+
     while (true)
     {
         AVPacket* pkt = demux.Read();
