@@ -28,14 +28,26 @@ int main(int argc, char *argv[])
     ADecode adecode;
     cout << "adecode.Open() = " << adecode.Open(demux.CopyAPara()) << endl;
      
-    while (true)
-    {
-        AVPacket* pkt = demux.Read();
-        if (!pkt)
-        {
-            break;
-        }
-    }
+    //while (true)
+    //{
+    //    AVPacket* pkt = demux.Read();
+    //    if (demux.IsAudio(pkt))
+    //    {
+    //        adecode.Send(pkt);
+    //        AVFrame* frame = adecode.Recv();
+    //        //cout << "Audio:" << frame << endl;
+    //    }
+    //    else
+    //    {
+    //        vdecode.Send(pkt);
+    //        AVFrame* frame = vdecode.Recv();
+    //        //cout << "Video:" << frame << endl;
+    //    }
+    //    if (!pkt)
+    //    {
+    //        break;
+    //    }
+    //}
 
 
 
@@ -43,5 +55,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     APlay w;
     w.show();
+
+
+    //³õÊ¼»¯gl´°¿Ú
+    w.ui.video->Init(demux.width, demux.height);
+
     return a.exec();
 }

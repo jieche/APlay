@@ -217,4 +217,12 @@ AVCodecParameters* ADemux::CopyAPara()
 	mux.unlock();
 	return pa;
 }
+
+bool ADemux::IsAudio(AVPacket* pkt)
+{
+	if (!pkt) return false;
+	if (pkt->stream_index == videoStream)
+		return false;
+	return true;
+}
   

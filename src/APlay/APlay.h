@@ -11,6 +11,6 @@ public:
     APlay(QWidget *parent = nullptr);
     ~APlay();
 
-private:
+//private:
     Ui::APlayClass ui;
 };
