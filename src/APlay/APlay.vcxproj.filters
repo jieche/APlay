@@ -43,9 +43,15 @@
     <ClCompile Include="ADemux.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ADecode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ADemux.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ADecode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

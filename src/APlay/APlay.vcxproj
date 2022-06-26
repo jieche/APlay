@@ -96,11 +96,13 @@
     <QtRcc Include="APlay.qrc" />
     <QtUic Include="APlay.ui" />
     <QtMoc Include="APlay.h" />
+    <ClCompile Include="ADecode.cpp" />
     <ClCompile Include="ADemux.cpp" />
     <ClCompile Include="APlay.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ADecode.h" />
     <ClInclude Include="ADemux.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
