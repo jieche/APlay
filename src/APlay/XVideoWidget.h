@@ -7,6 +7,8 @@
 #include <QOpenGLFunctions>
 #include <QGLShaderProgram>
 #include <mutex>
+
+struct AVFrame;
 class XVideoWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 	Q_OBJECT
@@ -21,6 +23,10 @@ protected:
 
 	//初始化gl
 	void initializeGL();
+
+public:
+	//不管成功与否都释放frame空间
+	virtual void Repaint(AVFrame* frame);
 
 	// 窗口尺寸变化
 	void resizeGL(int width, int height);
