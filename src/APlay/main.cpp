@@ -5,6 +5,7 @@
 #include "ADecode.h"
 
 #include<QThread>
+#include <XResample.h>
 
 using namespace std;
 
@@ -32,8 +33,10 @@ public:
 		//vdecode.Clear();
 		//vdecode.Close();
 		cout << "adecode.Open() = " << adecode.Open(demux.CopyAPara()) << endl;
+		cout << "resample.Open = " << resample.Open(demux.CopyAPara()) << endl;
 
 	}
+	unsigned char* pcm = new unsigned char[1024 * 1024];
 	void run()
 	{
 		for (;;)
@@ -41,8 +44,10 @@ public:
 			AVPacket* pkt = demux.Read();
 			if (demux.IsAudio(pkt))
 			{
-				//adecode.Send(pkt);
-				//AVFrame *frame = adecode.Recv();
+
+				adecode.Send(pkt);
+				AVFrame *frame = adecode.Recv();
+				cout << "Resample:" << resample.Resample(frame, pcm) << " ";
 				//cout << "Audio:" << frame << endl;
 			}
 			else
@@ -51,10 +56,11 @@ public:
 				AVFrame* frame = vdecode.Recv();
 				video->Repaint(frame);
 				msleep(40);
-				//cout << "Video:" << frame << endl;
+				cout << "Video:" << frame << endl;
 			}
 			if (!pkt)break;
 		}
+
 	}
 	///²âÊÔXDemux
 	ADemux demux;
@@ -62,6 +68,7 @@ public:
 	ADecode vdecode;
 	ADecode adecode;
 	XVideoWidget* video;
+	XResample resample;
 
 };
 
