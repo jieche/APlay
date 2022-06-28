@@ -80,6 +80,8 @@ bool ADemux::Open(const char* url)
 	AVStream* as = ic->streams[videoStream];
 	width = as->codecpar->width;
 	height = as->codecpar->height;
+	sampleRate = as->codecpar->sample_rate;
+	channels = as->codecpar->channels;
 	cout << "=======================================================" << endl;
 	cout << videoStream << "ÊÓÆµÐÅÏ¢" << endl;
 	cout << "codec_id = " << as->codecpar->codec_id << endl;

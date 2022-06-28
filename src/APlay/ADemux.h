@@ -39,10 +39,13 @@ protected:
 	//音视频索引，读取时区分音视频
 	int videoStream = 0;
 	int audioStream = 1;
+
 public:
 	int totalMs = 0;
 	int width = 0;
 	int height = 0;
+	int sampleRate = 0;
+	int channels = 0;
 };
 
 

@@ -32,7 +32,7 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>5.15.2</QtInstall>
-    <QtModules>core;opengl;gui;widgets;openglextensions</QtModules>
+    <QtModules>core;opengl;gui;multimedia;widgets;openglextensions</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
@@ -64,7 +64,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\lib\ffmpeg\include;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -94,6 +94,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="XAudioPlay.cpp" />
     <ClCompile Include="XResample.cpp" />
     <ClCompile Include="XVideoWidget.cpp" />
     <QtRcc Include="APlay.qrc" />
@@ -107,6 +108,7 @@
   <ItemGroup>
     <ClInclude Include="ADecode.h" />
     <ClInclude Include="ADemux.h" />
+    <ClInclude Include="XAudioPlay.h" />
     <ClInclude Include="XResample.h" />
     <QtMoc Include="XVideoWidget.h" />
   </ItemGroup>
