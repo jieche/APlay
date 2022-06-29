@@ -95,6 +95,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="XAudioPlay.cpp" />
+    <ClCompile Include="XAudioThread.cpp" />
     <ClCompile Include="XResample.cpp" />
     <ClCompile Include="XVideoWidget.cpp" />
     <QtRcc Include="APlay.qrc" />
@@ -109,6 +110,7 @@
     <ClInclude Include="ADecode.h" />
     <ClInclude Include="ADemux.h" />
     <ClInclude Include="XAudioPlay.h" />
+    <ClInclude Include="XAudioThread.h" />
     <ClInclude Include="XResample.h" />
     <QtMoc Include="XVideoWidget.h" />
   </ItemGroup>

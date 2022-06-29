@@ -7,6 +7,7 @@
 #include<QThread>
 #include <XResample.h>
 #include <XAudioPlay.h>
+#include <XAudioThread.h>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ using namespace std;
 class TestThread :public QThread
 {
 public:
+	XAudioThread at;
 	void Init()
 	{
 		//œ„∏€Œ¿ ”
@@ -24,20 +26,26 @@ public:
 		demux.Close();
 		url = "960_544.mp4";
 		cout << "demux.Open = " << demux.Open(url);
-		cout << "CopyVPara = " << demux.CopyVPara() << endl;
-		cout << "CopyAPara = " << demux.CopyAPara() << endl;
-		//cout << "seek=" << demux.Seek(0.95) << endl;
+		//cout << "CopyVPara = " << demux.CopyVPara() << endl;
+		//cout << "CopyAPara = " << demux.CopyAPara() << endl;
+		////cout << "seek=" << demux.Seek(0.95) << endl;
 
-		/////////////////////////////
+		///////////////////////////////
 
 		cout << "vdecode.Open() = " << vdecode.Open(demux.CopyVPara()) << endl;
-		//vdecode.Clear();
-		//vdecode.Close();
-		cout << "adecode.Open() = " << adecode.Open(demux.CopyAPara()) << endl;
-		cout << "resample.Open = " << resample.Open(demux.CopyAPara()) << endl;
-		//XAudioPlay::Get()->channels = demux.channels;
-		//XAudioPlay::Get()->sampleRate = demux.sampleRate;
-		cout << "XAudioPlay::Get()->Open() = " << XAudioPlay::Get()->Open() << endl;
+		////vdecode.Clear();
+		////vdecode.Close();
+		//cout << "adecode.Open() = " << adecode.Open(demux.CopyAPara()) << endl;
+		//cout << "resample.Open = " << resample.Open(demux.CopyAPara()) << endl;
+		////XAudioPlay::Get()->channels = demux.channels;
+		////XAudioPlay::Get()->sampleRate = demux.sampleRate;
+		//cout << "XAudioPlay::Get()->Open() = " << XAudioPlay::Get()->Open() << endl;
+
+		demux.sampleRate = 44100;
+		demux.channels = 2;
+
+		cout << "at.Open = " << at.Open(demux.CopyAPara(), demux.sampleRate, demux.channels);
+		at.start();
 	}
 	unsigned char* pcm = new unsigned char[1024 * 1024];
 	void run()
@@ -47,8 +55,9 @@ public:
 			AVPacket* pkt = demux.Read();
 			if (demux.IsAudio(pkt))
 			{
+				at.Push(pkt);
 
-				adecode.Send(pkt);
+			/*	adecode.Send(pkt);
 				AVFrame *frame = adecode.Recv();
 				int len = resample.Resample(frame, pcm);
 				cout << "Resample:" << len << " ";
@@ -60,7 +69,7 @@ public:
 						break;
 					}
 					msleep(1);
-				}
+				}*/
 				//cout << "Audio:" << frame << endl;
 			}
 			else
