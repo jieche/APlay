@@ -8,6 +8,7 @@
 #include <XResample.h>
 #include <XAudioPlay.h>
 #include <XAudioThread.h>
+#include <XVideoThread.h>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ class TestThread :public QThread
 {
 public:
 	XAudioThread at;
+	XVideoThread vt;
 	void Init()
 	{
 		//香港卫视
@@ -32,7 +34,7 @@ public:
 
 		///////////////////////////////
 
-		cout << "vdecode.Open() = " << vdecode.Open(demux.CopyVPara()) << endl;
+		//cout << "vdecode.Open() = " << vdecode.Open(demux.CopyVPara()) << endl;
 		////vdecode.Clear();
 		////vdecode.Close();
 		//cout << "adecode.Open() = " << adecode.Open(demux.CopyAPara()) << endl;
@@ -45,7 +47,9 @@ public:
 		demux.channels = 2;
 
 		cout << "at.Open = " << at.Open(demux.CopyAPara(), demux.sampleRate, demux.channels);
+		vt.Open(demux.CopyVPara(), video, demux.width, demux.height);
 		at.start();
+		vt.start();
 	}
 	unsigned char* pcm = new unsigned char[1024 * 1024];
 	void run()
@@ -74,11 +78,12 @@ public:
 			}
 			else
 			{
-				vdecode.Send(pkt);
+				vt.Push(pkt);
+				/*vdecode.Send(pkt);
 				AVFrame* frame = vdecode.Recv();
 				video->Repaint(frame);
 				msleep(40);
-				cout << "Video:" << frame << endl;
+				cout << "Video:" << frame << endl;*/
 			}
 			if (!pkt)break;
 		}
@@ -87,10 +92,10 @@ public:
 	///测试XDemux
 	ADemux demux;
 	///解码测试
-	ADecode vdecode;
-	ADecode adecode;
-	XVideoWidget* video;
-	XResample resample;
+	/*ADecode vdecode;
+	ADecode adecode;*/
+	XVideoWidget* video =nullptr;
+	//XResample resample;
 
 };
 
@@ -139,7 +144,6 @@ int main(int argc, char *argv[])
     //}
 
 	TestThread tt;
-	tt.Init();
 
 
     QApplication a(argc, argv);
@@ -148,8 +152,9 @@ int main(int argc, char *argv[])
 
 
     //初始化gl窗口
-    w.ui.video->Init(tt.demux.width, tt.demux.height);
+    //w.ui.video->Init(tt.demux.width, tt.demux.height);
 	tt.video = w.ui.video;
+	tt.Init();
 	tt.start();
     return a.exec();
 }

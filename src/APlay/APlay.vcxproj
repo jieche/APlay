@@ -97,6 +97,7 @@
     <ClCompile Include="XAudioPlay.cpp" />
     <ClCompile Include="XAudioThread.cpp" />
     <ClCompile Include="XResample.cpp" />
+    <ClCompile Include="XVideoThread.cpp" />
     <ClCompile Include="XVideoWidget.cpp" />
     <QtRcc Include="APlay.qrc" />
     <QtUic Include="APlay.ui" />
@@ -109,9 +110,11 @@
   <ItemGroup>
     <ClInclude Include="ADecode.h" />
     <ClInclude Include="ADemux.h" />
+    <ClInclude Include="IVideoCall.h" />
     <ClInclude Include="XAudioPlay.h" />
     <ClInclude Include="XAudioThread.h" />
     <ClInclude Include="XResample.h" />
+    <ClInclude Include="XVideoThread.h" />
     <QtMoc Include="XVideoWidget.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

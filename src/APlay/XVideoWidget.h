@@ -7,9 +7,10 @@
 #include <QOpenGLFunctions>
 #include <QGLShaderProgram>
 #include <mutex>
+#include"IVideoCall.h"
 
 struct AVFrame;
-class XVideoWidget : public QOpenGLWidget, protected QOpenGLFunctions
+class XVideoWidget : public QOpenGLWidget, protected QOpenGLFunctions,  public IVideoCall
 {
 	Q_OBJECT
 
