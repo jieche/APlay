@@ -9,6 +9,7 @@
 #include <XAudioPlay.h>
 #include <XAudioThread.h>
 #include <XVideoThread.h>
+#include <XDemuxThread.h>
 
 using namespace std;
 
@@ -143,7 +144,7 @@ int main(int argc, char *argv[])
     //    }
     //}
 
-	TestThread tt;
+	//TestThread tt;
 
 
     QApplication a(argc, argv);
@@ -153,8 +154,13 @@ int main(int argc, char *argv[])
 
     //³õÊ¼»¯gl´°¿Ú
     //w.ui.video->Init(tt.demux.width, tt.demux.height);
-	tt.video = w.ui.video;
-	tt.Init();
-	tt.start();
+	//tt.video = w.ui.video;
+	//tt.Init();
+	//tt.start();
+
+
+	XDemuxThread dt;
+	dt.Open("960_544.mp4", w.ui.video);
+	dt.Start();
     return a.exec();
 }
