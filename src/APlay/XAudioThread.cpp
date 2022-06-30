@@ -7,9 +7,9 @@
 #include <iostream>
 using namespace std;
 
-void XAudioThread::Push(AVPacket *pkt)
+void XAudioThread::Push(AVPacket* pkt)
 {
-	if (!pkt)return; 
+	if (!pkt)return;
 	//阻塞
 	while (!isExit)
 	{
@@ -25,10 +25,11 @@ void XAudioThread::Push(AVPacket *pkt)
 	}
 }
 
-bool XAudioThread::Open(AVCodecParameters *para,int sampleRate, int channels)
+bool XAudioThread::Open(AVCodecParameters* para, int sampleRate, int channels)
 {
 	if (!para)return false;
 	mux.lock();
+	pts = 0;
 	if (!decode) decode = new ADecode();
 	if (!res) res = new XResample();
 	if (!ap) ap = XAudioPlay::Get();
@@ -56,7 +57,7 @@ bool XAudioThread::Open(AVCodecParameters *para,int sampleRate, int channels)
 }
 void XAudioThread::run()
 {
-	unsigned char *pcm = new unsigned char[1024 * 1024 * 10];
+	unsigned char* pcm = new unsigned char[1024 * 1024 * 10];
 	while (!isExit)
 	{
 		mux.lock();
@@ -69,7 +70,7 @@ void XAudioThread::run()
 			continue;
 		}
 
-		AVPacket *pkt = packs.front();
+		AVPacket* pkt = packs.front();
 		packs.pop_front();
 		bool re = decode->Send(pkt);
 		if (!re)
@@ -81,8 +82,12 @@ void XAudioThread::run()
 		//一次send 多次recv
 		while (!isExit)
 		{
-			AVFrame * frame = decode->Recv();
+			AVFrame* frame = decode->Recv();
 			if (!frame) break;
+
+			pts = decode->pts - ap->getNoPlayMs();
+			cout << "audio pts = " << pts << endl;
+
 			//重采样 
 			int size = res->Resample(frame, pcm);
 			//播放音频

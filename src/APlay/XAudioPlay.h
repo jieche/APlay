@@ -18,6 +18,9 @@ public:
 	virtual bool Write(const unsigned char *data, int datasize) = 0;
 	virtual int GetFree() = 0;
 
+	//返回缓冲中还没有播放的时间(毫秒)
+	virtual long long getNoPlayMs();
+
 	static XAudioPlay *Get();
 	XAudioPlay();
 	virtual ~XAudioPlay();

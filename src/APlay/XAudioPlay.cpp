@@ -74,7 +74,45 @@ public:
 		mux.unlock();
 		return free;
 	}
+
+	virtual long long getNoPlayMs()
+	{
+		mux.lock();
+
+		if (!output)
+		{
+			mux.unlock();
+			return 0;
+		}
+
+		long long pts = 0;
+		//还未播放的字节数
+		double size = output->bufferSize() - output->bytesFree();
+		//一秒音频字节大小
+		double secSize = sampleRate * (sampleSize / 8) * channels;
+		if (secSize  <= 0)
+		{
+			pts = 0;
+		}
+		else
+		{
+			pts = (size /secSize ) * 1000;
+		}
+
+
+
+
+		mux.unlock();
+
+		return pts;
+	}
 };
+
+long long XAudioPlay::getNoPlayMs()
+{
+	return 0;
+}
+
 XAudioPlay *XAudioPlay::Get()
 {
 	static CXAudioPlay play;

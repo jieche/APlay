@@ -106,7 +106,9 @@ AVFrame* ADecode::Recv()
 		av_frame_free(&frame);
 		return NULL;
 	}
-	cout << "[" << frame->linesize[0] << "] " << flush;
+	//cout << "[" << frame->linesize[0] << "] " << flush;
+
+	pts = frame->pts;
 	return frame;
 }
 

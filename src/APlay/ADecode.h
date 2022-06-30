@@ -10,6 +10,8 @@ class ADecode
 public:
 	bool isAudio = false;
 
+	//当前解码的pts
+	long long pts = 0;
 	//打开解码器,不管成功与否都释放para空间
 	virtual bool Open(AVCodecParameters* para);
 
