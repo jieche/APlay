@@ -29,6 +29,8 @@ protected:
 	std::mutex mux;
 	ADecode *decode = 0;
 	IVideoCall *call = 0;
+public:
+	long long synpts = 0;
 
 
 };

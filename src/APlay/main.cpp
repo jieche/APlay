@@ -160,7 +160,10 @@ int main(int argc, char *argv[])
 
 
 	XDemuxThread dt;
-	dt.Open("960_544.mp4", w.ui.video);
+	const char* url =R"(rtmp://live.hkstv.hk.lxdns.com/live/hks)";
+	//const  char* url = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+   //const char*  url = "960_544.mp4";
+	dt.Open(url, w.ui.video);
 	dt.Start();
     return a.exec();
 }

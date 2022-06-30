@@ -39,6 +39,7 @@ static double r2d(AVRational r)
 
 bool ADemux::Open(const char* url)
 {
+	Close();
 	//参数设置
 	AVDictionary* opts = NULL;
 	//设置rtsp流已tcp协议打开
@@ -80,8 +81,7 @@ bool ADemux::Open(const char* url)
 	AVStream* as = ic->streams[videoStream];
 	width = as->codecpar->width;
 	height = as->codecpar->height;
-	sampleRate = as->codecpar->sample_rate;
-	channels = as->codecpar->channels;
+
 	cout << "=======================================================" << endl;
 	cout << videoStream << "视频信息" << endl;
 	cout << "codec_id = " << as->codecpar->codec_id << endl;
@@ -96,6 +96,9 @@ bool ADemux::Open(const char* url)
 	//获取音频流
 	audioStream = av_find_best_stream(ic, AVMEDIA_TYPE_AUDIO, -1, -1, NULL, 0);
 	as = ic->streams[audioStream];
+	sampleRate = as->codecpar->sample_rate;
+	channels = as->codecpar->channels;
+
 	cout << "codec_id = " << as->codecpar->codec_id << endl;
 	cout << "format = " << as->codecpar->format << endl;
 	cout << "sample_rate = " << as->codecpar->sample_rate << endl;
@@ -105,6 +108,7 @@ bool ADemux::Open(const char* url)
 	cout << "frame_size = " << as->codecpar->frame_size << endl;
 	//1024 * 2 * 2 = 4096  fps = sample_rate/frame_size
 	mux.unlock();
+
 
 
 

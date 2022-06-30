@@ -37,6 +37,7 @@ void XVideoThread::Push(AVPacket *pkt)
 	while (!isExit)
 	{
 		mux.lock();
+		synpts = 0;
 		if (packs.size() < maxList)
 		{
 			packs.push_back(pkt);
@@ -56,6 +57,14 @@ void XVideoThread::run()
 
 		//没有数据
 		if (packs.empty() || !decode)
+		{
+			mux.unlock();
+			msleep(1);
+			continue;
+		}
+
+		//音视频同步
+		if (synpts < decode->pts)
 		{
 			mux.unlock();
 			msleep(1);
