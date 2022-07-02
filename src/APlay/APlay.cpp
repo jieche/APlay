@@ -10,6 +10,7 @@ APlay::APlay(QWidget *parent)
 {
     ui->setupUi(this);
 	dt.Start();
+	startTimer(40);
 }
 
 APlay::~APlay()
@@ -30,4 +31,16 @@ void APlay::OpenFile()
 		return;
 	}
 
+}
+
+//定时器 滑动条显示
+void APlay::timerEvent(QTimerEvent* e)
+{
+	long long total = dt.totalMs;
+	if (total > 0)
+	{
+		double pos = (double)dt.pts / (double)total;
+		int v = ui->horizontalSlider->maximum() * pos;
+		ui->horizontalSlider->setValue(v);
+	}
 }
