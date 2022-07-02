@@ -8,6 +8,27 @@
 using namespace std;
 
 
+//停止线程，清理资源
+void XAudioThread::Close()
+{
+	ADecodeThread::Close();
+	if (res)
+	{
+		res->Close();
+		amux.lock();
+		delete res;
+		res = NULL;
+		amux.unlock();
+	}
+	if (ap)
+	{
+		ap->Close();
+		amux.lock();
+		ap = NULL;
+		amux.unlock();
+	}
+}
+
 bool XAudioThread::Open(AVCodecParameters* para, int sampleRate, int channels)
 {
 	if (!para)return false;

@@ -12,6 +12,9 @@ public:
 	virtual void Push(AVPacket* pkt);
 	AVPacket* Pop();
 	virtual void Clear();
+
+	//清理资源，停止线程
+	virtual void Close();
 protected:
 	std::list <AVPacket*> packs;
 	std::mutex mux;

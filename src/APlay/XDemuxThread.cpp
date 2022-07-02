@@ -102,3 +102,18 @@ XDemuxThread::~XDemuxThread()
 	isExit = true;
 	wait();
 }
+
+//关闭线程清理资源
+void XDemuxThread::Close()
+{
+	isExit = true;
+	wait();
+	if (vt) vt->Close();
+	if (at) at->Close();
+	mux.lock();
+	delete vt;
+	delete at;
+	vt = NULL;
+	at = NULL;
+	mux.unlock();
+}

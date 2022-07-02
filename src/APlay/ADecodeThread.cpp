@@ -59,3 +59,18 @@ void ADecodeThread::Clear()
 	}
 	mux.unlock();
 }
+
+void ADecodeThread::Close()
+{
+	Clear();
+
+	//等待线程退出
+	isExit = true;
+	wait();
+	decode->Close();
+
+	mux.lock();
+	delete decode;
+	decode = NULL;
+	mux.unlock();
+}

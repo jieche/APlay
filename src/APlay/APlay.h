@@ -13,5 +13,5 @@ public:
 public slots:
     void OpenFile();
 private:
-    Ui::APlayClass ui;
+    Ui::APlayClass *ui;
 };
