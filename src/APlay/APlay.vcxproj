@@ -94,6 +94,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ADecodeThread.cpp" />
     <ClCompile Include="XAudioPlay.cpp" />
     <ClCompile Include="XAudioThread.cpp" />
     <ClCompile Include="XDemuxThread.cpp" />
@@ -110,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ADecode.h" />
+    <ClInclude Include="ADecodeThread.h" />
     <ClInclude Include="ADemux.h" />
     <ClInclude Include="IVideoCall.h" />
     <ClInclude Include="XAudioPlay.h" />

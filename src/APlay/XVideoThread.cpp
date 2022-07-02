@@ -8,7 +8,10 @@ using namespace std;
 bool XVideoThread::Open(AVCodecParameters *para, IVideoCall *call,int width,int height)
 {
 	if (!para)return false;
-	mux.lock();
+
+	Clear();
+
+	vmux.lock();
 
 	//初始化显示窗口
 	this->call = call;
@@ -16,67 +19,51 @@ bool XVideoThread::Open(AVCodecParameters *para, IVideoCall *call,int width,int 
 	{
 		call->Init(width, height);
 	}
+	vmux.unlock();
 
-	//打开解码器
-	if (!decode) decode = new ADecode();
+	
 	int re = true;
 	if (!decode->Open(para))
 	{
 		cout << "audio XDecode open failed!" << endl;
 		re = false;
 	}
-	mux.unlock();
 	cout << "XAudioThread::Open :" << re << endl;
 	return re;
 }
 
-void XVideoThread::Push(AVPacket *pkt)
-{
-	if (!pkt)return;
-	//阻塞
-	while (!isExit)
-	{
-		mux.lock();
-		synpts = 0;
-		if (packs.size() < maxList)
-		{
-			packs.push_back(pkt);
-			mux.unlock();
-			break;
-		}
-		mux.unlock();
-		msleep(1);
-	}
-}
+
 
 void XVideoThread::run()
 {
 	while (!isExit)
 	{
-		mux.lock();
-
-		//没有数据
-		if (packs.empty() || !decode)
-		{
-			mux.unlock();
-			msleep(1);
-			continue;
-		}
+		vmux.lock();
 
 		//音视频同步
-		if (synpts < decode->pts)
+		if (synpts>0&&synpts < decode->pts)
 		{
-			mux.unlock();
+			vmux.unlock();
 			msleep(1);
 			continue;
 		}
 
-		AVPacket *pkt = packs.front();
-		packs.pop_front();
+		////没有数据
+		//if (packs.empty() || !decode)
+		//{
+		//	vmux.unlock();
+		//	msleep(1);
+		//	continue;
+		//}
+
+	/*	AVPacket *pkt = packs.front();
+		packs.pop_front();*/
+
+		AVPacket* pkt = Pop();
 		bool re = decode->Send(pkt);
 		if (!re)
 		{
-			mux.unlock();
+			vmux.unlock();
 			msleep(1);
 			continue;
 		}
@@ -92,7 +79,7 @@ void XVideoThread::run()
 			}
 
 		}
-		mux.unlock();
+		vmux.unlock();
 	}
 }
 
@@ -103,7 +90,5 @@ XVideoThread::XVideoThread()
 
 XVideoThread::~XVideoThread()
 {
-	//等待线程退出
-	isExit = true;
-	wait();
+
 }

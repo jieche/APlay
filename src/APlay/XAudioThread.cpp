@@ -7,28 +7,14 @@
 #include <iostream>
 using namespace std;
 
-void XAudioThread::Push(AVPacket* pkt)
-{
-	if (!pkt)return;
-	//阻塞
-	while (!isExit)
-	{
-		mux.lock();
-		if (packs.size() < maxList)
-		{
-			packs.push_back(pkt);
-			mux.unlock();
-			break;
-		}
-		mux.unlock();
-		msleep(1);
-	}
-}
 
 bool XAudioThread::Open(AVCodecParameters* para, int sampleRate, int channels)
 {
 	if (!para)return false;
-	mux.lock();
+
+	Clear();
+
+	amux.lock();
 	pts = 0;
 	if (!decode) decode = new ADecode();
 	if (!res) res = new XResample();
@@ -46,12 +32,13 @@ bool XAudioThread::Open(AVCodecParameters* para, int sampleRate, int channels)
 		re = false;
 		cout << "XAudioPlay open failed!" << endl;
 	}
+	amux.unlock();
+
 	if (!decode->Open(para))
 	{
 		cout << "audio XDecode open failed!" << endl;
 		re = false;
 	}
-	mux.unlock();
 	cout << "XAudioThread::Open :" << re << endl;
 	return re;
 }
@@ -60,22 +47,25 @@ void XAudioThread::run()
 	unsigned char* pcm = new unsigned char[1024 * 1024 * 10];
 	while (!isExit)
 	{
-		mux.lock();
+		amux.lock();
 
-		//没有数据
-		if (packs.empty() || !decode || !res || !ap)
-		{
-			mux.unlock();
-			msleep(1);
-			continue;
-		}
+		////没有数据
+		//if (packs.empty() || !decode || !res || !ap)
+		//{
+		//	amux.unlock();
+		//	msleep(1);
+		//	continue;
+		//}
 
-		AVPacket* pkt = packs.front();
-		packs.pop_front();
+		//AVPacket* pkt = packs.front();
+		//packs.pop_front();
+
+
+		AVPacket* pkt = Pop();
 		bool re = decode->Send(pkt);
 		if (!re)
 		{
-			mux.unlock();
+			amux.unlock();
 			msleep(1);
 			continue;
 		}
@@ -104,7 +94,7 @@ void XAudioThread::run()
 				break;
 			}
 		}
-		mux.unlock();
+		amux.unlock();
 	}
 	delete pcm;
 }

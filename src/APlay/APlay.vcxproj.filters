@@ -64,6 +64,9 @@
     <ClCompile Include="XDemuxThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ADecodeThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ADemux.h">
@@ -88,6 +91,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="XDemuxThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ADecodeThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

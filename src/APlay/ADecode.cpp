@@ -6,6 +6,14 @@ extern "C"
 }
 #include <iostream>
 using namespace std;
+
+void XFreePacket(AVPacket** pkt)
+{
+	if (pkt || (*pkt))return;
+	av_packet_free(pkt);
+}
+
+
 void ADecode::Close()
 {
 	mux.lock();
