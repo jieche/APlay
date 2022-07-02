@@ -10,7 +10,8 @@ class APlay : public QWidget
 public:
     APlay(QWidget *parent = nullptr);
     ~APlay();
-
-//private:
+public slots:
+    void OpenFile();
+private:
     Ui::APlayClass ui;
 };

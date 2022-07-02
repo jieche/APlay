@@ -159,11 +159,11 @@ int main(int argc, char *argv[])
 	//tt.start();
 
 
-	XDemuxThread dt;
-	const char* url =R"(rtmp://live.hkstv.hk.lxdns.com/live/hks)";
-	//const  char* url = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
-   //const char*  url = "960_544.mp4";
-	dt.Open(url, w.ui.video);
-	dt.Start();
+	//XDemuxThread dt;
+	//const char* url =R"(rtmp://live.hkstv.hk.lxdns.com/live/hks)";
+	////const  char* url = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+ //  //const char*  url = "960_544.mp4";
+	//dt.Open(url, w.ui.video);
+	//dt.Start();
     return a.exec();
 }
