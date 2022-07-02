@@ -20,7 +20,7 @@ public:
 
 	//返回缓冲中还没有播放的时间(毫秒)
 	virtual long long getNoPlayMs();
-
+	virtual void SetPause(bool isPause) = 0;
 	static XAudioPlay *Get();
 	XAudioPlay();
 	virtual ~XAudioPlay();

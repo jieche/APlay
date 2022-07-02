@@ -19,6 +19,21 @@ APlay::~APlay()
 	delete ui;
 }
 
+void APlay::play()
+{
+	bool isPause = !dt.isPause;
+	dt.SetPause(isPause);
+	if (!isPause)
+	{
+		ui->pushButton_play->setText(QString::fromLocal8Bit("播放"));
+	}
+	else
+	{
+		ui->pushButton_play->setText(QString::fromLocal8Bit("暂停"));
+
+	}
+}
+
 void APlay::OpenFile()
 {
 	//选择文件
@@ -50,7 +65,7 @@ void APlay::timerEvent(QTimerEvent* e)
 void APlay::mouseDoubleClickEvent(QMouseEvent* e)
 {
 	if (isFullScreen())
-		this->showNormal();
+		this->showNormal(); 
 	else
 		this->showFullScreen();
 }

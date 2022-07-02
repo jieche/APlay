@@ -23,9 +23,11 @@ public:
 	void run();
 	XAudioThread();
 	virtual ~XAudioThread();
+
+	void SetPause(bool isPause);
 	
 protected:
-
+	bool isPause = false;
 	std::mutex amux;
 	XAudioPlay *ap = 0;
 	XResample *res = 0;

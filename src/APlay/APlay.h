@@ -12,6 +12,7 @@ public:
     ~APlay();
 public slots:
     void OpenFile();
+    void play();
 protected:
     //定时器 滑动条显示
     void timerEvent(QTimerEvent* e) override;

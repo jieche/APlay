@@ -15,12 +15,14 @@ public:
 	virtual void Start();
 	//关闭线程清理资源
 	virtual void Close();
+	void SetPause(bool isPause);
 	void run();
 	XDemuxThread();
 	virtual ~XDemuxThread();
 	bool isExit = false;
 	long long pts = 0;
 	long long totalMs = 0;
+	bool isPause = false;
 protected:
 	std::mutex mux;
 	ADemux *demux = 0;

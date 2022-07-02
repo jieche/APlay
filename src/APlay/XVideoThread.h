@@ -22,9 +22,13 @@ public:
 	XVideoThread();
 	virtual ~XVideoThread();
 
+	void SetPause(bool isPause);
+
 	IVideoCall *call = 0;
 public:
 	std::mutex vmux;
+	bool isPause = false;
+
 
 
 };

@@ -69,7 +69,12 @@ void XAudioThread::run()
 	while (!isExit)
 	{
 		amux.lock();
-
+		if (this->isPause)
+		{
+			amux.unlock();
+			msleep(5);
+			continue;
+		}
 		////没有数据
 		//if (packs.empty() || !decode || !res || !ap)
 		//{
@@ -130,4 +135,13 @@ XAudioThread::~XAudioThread()
 	//等待线程退出
 	isExit = true;
 	wait();
+}
+
+void XAudioThread::SetPause(bool isPause)
+{
+	//amux.lock();
+	this->isPause = isPause;
+	if (ap)
+		ap->SetPause(isPause);
+	//amux.unlock();
 }

@@ -75,6 +75,26 @@ public:
 		return free;
 	}
 
+	void SetPause(bool isPause)
+	{
+		mux.lock();
+		if (!output)
+		{
+			mux.unlock();
+			return;
+		}
+		if (isPause)
+		{
+			output->suspend();
+		}
+		else
+		{
+			output->resume();
+		}
+		mux.unlock();
+	}
+
+
 	virtual long long getNoPlayMs()
 	{
 		mux.lock();
@@ -128,3 +148,4 @@ XAudioPlay::XAudioPlay()
 XAudioPlay::~XAudioPlay()
 {
 }
+
