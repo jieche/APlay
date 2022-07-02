@@ -44,3 +44,21 @@ void APlay::timerEvent(QTimerEvent* e)
 		ui->horizontalSlider->setValue(v);
 	}
 }
+
+
+//双击全屏
+void APlay::mouseDoubleClickEvent(QMouseEvent* e)
+{
+	if (isFullScreen())
+		this->showNormal();
+	else
+		this->showFullScreen();
+}
+//窗口尺寸变化
+void APlay::resizeEvent(QResizeEvent* e)
+{
+	ui->horizontalSlider->move(50, this->height() - 100);
+	ui->horizontalSlider->resize(this->width() - 100, ui->horizontalSlider->height());
+	ui->pushButton->move(100, this->height() - 150);
+	ui->video->resize(this->size());
+}
