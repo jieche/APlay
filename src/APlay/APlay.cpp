@@ -19,6 +19,18 @@ APlay::~APlay()
 	delete ui;
 }
 
+void APlay::SliderPress()
+{
+	isSliderPress = true;
+}
+void APlay::SliderRelease()
+{
+	isSliderPress = false;
+	double pos = 0.0;
+	pos = (double)ui->horizontalSlider->value() / (double)ui->horizontalSlider->maximum();
+	dt.Seek(pos);
+}
+
 void APlay::play()
 {
 	bool isPause = !dt.isPause;
@@ -51,6 +63,7 @@ void APlay::OpenFile()
 //定时器 滑动条显示
 void APlay::timerEvent(QTimerEvent* e)
 {
+	if (isSliderPress)return;
 	long long total = dt.totalMs;
 	if (total > 0)
 	{

@@ -13,6 +13,8 @@ public:
 public slots:
     void OpenFile();
     void play();
+    void SliderPress();
+    void SliderRelease();
 protected:
     //定时器 滑动条显示
     void timerEvent(QTimerEvent* e) override;
@@ -26,4 +28,5 @@ protected:
 
 private:
     Ui::APlayClass *ui;
+    bool isSliderPress = false;
 };

@@ -5,6 +5,24 @@
 #include <iostream>
 using namespace std;
 
+void XDemuxThread::Clear()
+{
+	mux.lock();
+	if (demux)demux->Clear();
+	if (vt) vt->Clear();
+	if (at) at->Clear();
+	mux.unlock();
+}
+
+void XDemuxThread::Seek(double pos)
+{
+	Clear();
+	mux.lock();
+	if (demux)
+		demux->Seek(pos);
+	mux.unlock();
+}
+
 void XDemuxThread::SetPause(bool isPause)
 {
 	//mux.lock();

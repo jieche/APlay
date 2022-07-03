@@ -113,9 +113,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>sliderPressed()</signal>
+   <receiver>APlayClass</receiver>
+   <slot>SliderPress()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>52</x>
+     <y>661</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>785</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>sliderReleased()</signal>
+   <receiver>APlayClass</receiver>
+   <slot>SliderRelease()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>657</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>121</x>
+     <y>759</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OpenFile()</slot>
   <slot>play()</slot>
+  <slot>SliderPress()</slot>
+  <slot>SliderRelease()</slot>
  </slots>
 </ui>

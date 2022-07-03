@@ -15,6 +15,8 @@ public:
 	virtual void Start();
 	//关闭线程清理资源
 	virtual void Close();
+	void Clear();
+	void Seek(double pos);
 	void SetPause(bool isPause);
 	void run();
 	XDemuxThread();
