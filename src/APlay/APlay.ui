@@ -39,7 +39,7 @@
     <string>打开文件</string>
    </property>
   </widget>
-  <widget class="QSlider" name="horizontalSlider">
+  <widget class="XSlider" name="horizontalSlider">
    <property name="geometry">
     <rect>
      <x>49</x>
@@ -75,6 +75,11 @@
    <slots>
     <slot>play()</slot>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>XSlider</class>
+   <extends>QSlider</extends>
+   <header>XSlider.h</header>
   </customwidget>
  </customwidgets>
  <resources>

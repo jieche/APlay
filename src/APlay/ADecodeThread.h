@@ -18,6 +18,7 @@ public:
 protected:
 	std::list <AVPacket*> packs;
 	std::mutex mux;
+public:
 	ADecode* decode = 0;
 	//最大队列
 	int maxList = 100;

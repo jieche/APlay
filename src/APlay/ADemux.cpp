@@ -70,7 +70,7 @@ bool ADemux::Open(const char* url)
 
 	//总时长 毫秒
 	 this->totalMs = ic->duration / (AV_TIME_BASE / 1000);
-	cout << "totalMs = " << totalMs << endl;
+	//cout << "totalMs = " << totalMs << endl;
 
 	//打印视频流详细信息
 	av_dump_format(ic, 0, url, 0);

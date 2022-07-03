@@ -31,14 +31,14 @@ public:
 	//清空读取缓存
 	virtual void Clear();
 	virtual void Close();
-
+	//音视频索引，读取时区分音视频
+	int videoStream = 0;
+	int audioStream = 1;
 protected:
 	std::mutex mux;
 	//解封装上下文
 	AVFormatContext* ic = NULL;
-	//音视频索引，读取时区分音视频
-	int videoStream = 0;
-	int audioStream = 1;
+
 
 public:
 	int totalMs = 0;
